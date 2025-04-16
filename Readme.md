@@ -1,4 +1,4 @@
-삼*이*에이 Wellding Engine AI
+삼X이XX이 Wellding Engine AI
 
 
 1. Unreal Engine 연동: 이 코드만으로는 Unreal Engine과의 직접적인 연동이 이루어지지 않습니다. Unreal Engine 프로젝트 설정, C++/블루프린트 스크립팅, 그리고 Python과의 통신 (예: TCP/IP, gRPC, OSC 등)을 위한 별도의 작업이 필요합니다. 여기서는 Python 측면에서의 인터페이스 역할만 가정합니다.
