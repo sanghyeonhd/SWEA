@@ -1,0 +1,23 @@
+# 기본 텍스트 파일 처리
+* text=auto eol=lf
+
+# 소스코드 파일(UTF-8 권장)
+*.py text diff=python
+*.md text
+*.csv text
+*.json text
+*.yml text
+*.yaml text
+*.sh text
+*.bat text
+
+# 바이너리 파일
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pkl binary
+*.pth binary
+
+# Jupyter 노트북
+*.ipynb text 

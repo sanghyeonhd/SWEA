@@ -72,50 +72,38 @@ WeldingDigitalTwinAI/
 *   **`models/`**: 학습된 AI 모델 가중치 파일(`welding_model.pth`) 및 데이터 스케일링에 사용된 스케일러 객체 파일(`scaler.pkl`)이 저장될 디렉토리입니다. `trainer.py`에 의해 생성되고 `ai_inference_engine.py` 등에 의해 로드됩니다. **실제 학습 실행을 통해 생성해야 합니다.**
 *   **`hmi_application/`**: (개념적) 사용자 인터페이스(Human-Machine Interface) 관련 파일들이 포함될 디렉토리입니다. 운영자가 시스템을 모니터링하고 제어하는 기능을 제공하며, 별도 애플리케이션으로 개발될 수 있습니다.
 
-## 설치 방법
+## 실행 방법
 
-프로젝트를 실행하기 위해 필요한 라이브러리는 `requirements.txt`에 명시되어 있습니다. Python 3.8 이상 환경에서 다음 명령을 사용하여 설치할 수 있습니다.
+1. Python 3.8 이상 환경에서 프로젝트 루트(README.md가 있는 위치)에서 아래 명령어를 순서대로 실행하세요.
 
 ```bash
-# (선택 사항) 가상 환경 생성 및 활성화 - 프로젝트 환경 분리를 위해 권장
-# python -m venv .venv
-# source .venv/bin/activate # Linux/macOS
-# .venv\Scripts\activate # Windows
+# (선택 사항) 가상 환경 생성 및 활성화
+python -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+# .venv\Scripts\activate  # Windows
 
-# 의존성 라이브러리 설치
+# 의존성 설치 (NumPy 1.x 버전 포함)
 pip install -r requirements.txt
+```
 
-# 프로젝트를 패키지로 설치 (개발 중에는 소스 코드 수정 시 자동 반영되는 개발 모드 권장)
-# setup.py의 PACKAGE_DIR = {'': 'src'} 설정에 따라 소스 코드가 'src/' 디렉토리 아래에 있다고 가정
-pip install -e .
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-IGNORE_WHEN_COPYING_END
-실행 방법
+2. (선택 사항) 더미 AI 모델 및 스케일러 파일 생성 (테스트용)
+```bash
+python create_dummy_model_files.py
+```
 
-src/config.py 파일에 필요한 설정을 확인하고 실제 환경에 맞게 수정합니다 (로봇 IP/포트, DB 경로, 모델/스케일러 파일 경로 등).
+3. 시스템 실행 (AI 예측 및 전체 파이프라인 테스트)
+```bash
+python src/main.py
+```
 
-(필요시) trainer.py를 실행하여 AI 모델을 학습시키고 models/welding_model.pth 및 models/scaler.pkl 파일을 생성합니다. 학습 데이터가 없을 경우, 테스트를 위해 더미 파일을 생성하는 별도 스크립트나 방법을 사용할 수 있습니다.
+- 실행 결과는 콘솔에 출력되며, 예측 로그는 `prediction_log.csv`로 저장됩니다.
+- 실제 학습된 모델을 사용하려면 `src/trainer.py`로 학습을 진행한 후 `models/welding_model.pth`, `models/scaler.pkl` 파일을 사용하세요.
 
-(선택 사항) physics_interface.py, robot_control_interface.py를 테스트하거나 사용하려면 해당 가상 프로토콜과 포트에 맞게 동작하는 가상 서버 또는 실제 장비를 준비하고 실행합니다.
+4. (고급) system_manager 기반 전체 통합 실행은 `src/system_manager.py` 또는 setup.py의 entry point를 활용할 수 있습니다.
 
-프로젝트 루트 디렉토리 (README.md 파일이 있는 곳)에서 다음 명령을 실행하여 시스템 관리자(system_manager.py)를 시작합니다.
+---
 
-# setup.py의 ENTRY_POINTS 설정에 따라 설치된 콘솔 스크립트 실행
-samsung_welding_dt_start
-
-# 또는 setup.py가 없거나 ENTRY_POINTS를 사용하지 않는 경우, 직접 실행 (src/ 구조 가정)
-# python -m src.system_manager
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-Bash
-IGNORE_WHEN_COPYING_END
-
-시스템이 시작되면 system_manager는 config.py를 읽어 모듈들을 초기화하고, 로봇 연결, 센서 데이터 수집 시작 등의 초기화 과정을 거쳐 대기 상태가 됩니다. welding_process_manager.py의 start_welding_job 등의 메서드를 외부(예: HMI 연동 모듈)에서 호출하거나, system_manager가 제공하는 외부 제어 인터페이스를 통해 특정 용접 작업을 시작할 수 있습니다. Ctrl+C 또는 시스템 종료 신호(SIGINT, SIGTERM)로 시스템을 정상 종료할 수 있습니다.
+이외의 상세 설정(로봇/시뮬레이터 연동, 데이터 경로 등)은 `src/config.py`를 참고하여 환경에 맞게 수정하세요.
 
 추가 개발 및 개선 사항 (Work in Progress)
 
@@ -166,8 +154,3 @@ robot_control_interface.py: 현대로보틱스 컨트롤러와의 실제 통신 
 이 업데이트된 `README.md`는 현재까지 논의된 시스템의 모든 핵심 구성 요소, 파일 구조, 그리고 앞으로 나아가야 할 구체적인 개발 방향을 상세히 담고 있습니다.
 
 이제 이 `README.md`를 시스템 개발의 가이드라인으로 활용하여 각 모듈의 상세 설계 및 구현 작업을 진행할 수 있습니다. 어떤 부분부터 실제 코딩 또는 상세 설계에 착수할지 알려주시면 됩니다.
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-IGNORE_WHEN_COPYING_END
