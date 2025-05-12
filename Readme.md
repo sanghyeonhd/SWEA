@@ -17,37 +17,36 @@
 
 프로젝트의 주요 파일 구조는 다음과 같습니다. (`src/` 디렉토리 아래에 소스 코드가 위치하는 구조를 제안합니다.)
 
-
+```text
 WeldingDigitalTwinAI/
 ├── .gitattributes
 ├── .gitignore
-├── README.md # 프로젝트 개요 및 설명 (현재 파일)
-├── requirements.txt # Python 의존성 라이브러리 목록
-├── setup.py # 프로젝트 패키징 및 설치 설정
-└── src/ # 메인 소스 코드 디렉토리
-├── init.py # src 디렉토리를 Python 패키지로 만듦 (최소한의 내용)
-├── config.py # 시스템 설정 값 관리
-├── data_handler.py # AI 학습을 위한 과거/배치 데이터 처리 (CSV 예시)
-├── sensor_data_handler.py # 실시간 센서 데이터 수집 및 처리 (개념적)
-├── ai_model.py # PyTorch 기반 AI 모델 아키텍처 정의
-├── trainer.py # AI 모델 학습 로직 및 모델/스케일러 저장 기능 포함
-├── predictor.py # 용접 결과 예측 로직 (AI/물리 기반 - 초기 뼈대)
-├── ai_inference_engine.py # 학습된 AI 모델을 사용한 실시간 추론 엔진
-├── evaluator.py # 예측 결과에 대한 기본적인 품질 평가 (초기 뼈대)
-├── quality_evaluator_adaptive_control.py # 종합 품질 평가 및 적응 제어 결정 로직
-├── physics_interface.py # Unreal Engine 물리 시뮬레이션 연동 인터페이스 (가상)
-├── robot_control_interface.py # 로봇 컨트롤러 연동 인터페이스 (가상)
-├── welding_process_manager.py # 전체 용접 작업 흐름 관리 및 장비 조율
-├── data_logger_db.py # 데이터베이스 로깅 및 데이터 관리 (SQLite 예시)
-└── system_manager.py # 전체 시스템 모듈 초기화, 시작, 중지 및 조율 (메인 컨트롤러)
-├── data/ # 예시 데이터 파일 저장 디렉토리
-├── dummy_sensor_data.csv # 예시 센서 데이터 (내용상 labels.csv로 사용될 가능성 있음)
-└── dummy_labels.csv # 예시 레이블 데이터 (내용상 sensor_data.csv로 사용될 가능성 있음)
-├── models/ # 학습된 모델 및 관련 파일 저장 디렉토리
-├── welding_model.pth # 학습된 AI 모델 가중치 파일 (trainer.py 실행으로 생성 필요)
-└── scaler.pkl # 학습 시 사용된 데이터 스케일러 객체 파일 (trainer.py 실행으로 생성 필요)
-
-└── hmi_application/ # 사용자 인터페이스 파일 (별도 애플리케이션 또는 레포지토리 가능성 높음)
+├── README.md               # 프로젝트 개요 및 설명 (현재 파일)
+├── requirements.txt        # Python 의존성 라이브러리 목록
+├── setup.py                # 프로젝트 패키징 및 설치 설정
+└── src/                    # 메인 소스 코드 디렉토리
+    ├── __init__.py         # src 디렉토리를 Python 패키지로 만듦 (최소한의 내용)
+    ├── config.py           # 시스템 설정 값 관리
+    ├── data_handler.py     # AI 학습을 위한 과거/배치 데이터 처리 (CSV 예시)
+    ├── sensor_data_handler.py # 실시간 센서 데이터 수집 및 처리 (개념적)
+    ├── ai_model.py         # PyTorch 기반 AI 모델 아키텍처 정의
+    ├── trainer.py          # AI 모델 학습 로직 및 모델/스케일러 저장 기능 포함
+    ├── predictor.py        # 용접 결과 예측 로직 (AI/물리 기반 - 초기 뼈대)
+    ├── ai_inference_engine.py # 학습된 AI 모델을 사용한 실시간 추론 엔진
+    ├── evaluator.py        # 예측 결과에 대한 기본적인 품질 평가 (초기 뼈대)
+    ├── quality_evaluator_adaptive_control.py # 종합 품질 평가 및 적응 제어 결정 로직
+    ├── physics_interface.py # Unreal Engine 물리 시뮬레이션 연동 인터페이스 (가상)
+    ├── robot_control_interface.py # 로봇 컨트롤러 연동 인터페이스 (가상)
+    ├── welding_process_manager.py # 전체 용접 작업 흐름 관리 및 장비 조율
+    ├── data_logger_db.py   # 데이터베이스 로깅 및 데이터 관리 (SQLite 예시)
+    └── system_manager.py   # 전체 시스템 모듈 초기화, 시작, 중지 및 조율 (메인 컨트롤러)
+├── data/                   # 예시 데이터 파일 저장 디렉토리
+    ├── dummy_sensor_data.csv # 예시 센서 데이터 (내용상 `labels.csv`로 사용될 가능성 있음)
+    └── dummy_labels.csv      # 예시 레이블 데이터 (내용상 `sensor_data.csv`로 사용될 가능성 있음)
+├── models/                 # 학습된 모델 및 관련 파일 저장 디렉토리
+    ├── welding_model.pth   # 학습된 AI 모델 가중치 파일 (trainer.py 실행으로 생성 필요)
+    └── scaler.pkl          # 학습 시 사용된 데이터 스케일러 객체 파일 (trainer.py 실행으로 생성 필요)
+# └── hmi_application/        # 사용자 인터페이스 파일 (별도 애플리케이션 또는 레포지토리 가능성 높음)
 
 ### 주요 파일 설명
 
