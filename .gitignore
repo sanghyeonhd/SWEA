@@ -22,13 +22,6 @@ ENV/
 # macOS
 .DS_Store
 
-# Data & Models
-data/
-models/
-*.csv
-*.pkl
-*.pth
-
 # Logs
 *.log
 prediction_log.csv
