@@ -1,0 +1,25 @@
+// Plugins/DigitalTwinCommPlugin/DigitalTwinCommPlugin.uplugin
+{
+	"FileVersion": 1,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DigitalTwinCommPlugin", // 플러그인 이름
+	"Description": "Plugin for Python Digital Twin communication and visualization.",
+	"Category": "Digital Twin",
+	"CreatedBy": "Samsung E&A AI Team (Placeholder)",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true, // 플러그인에 에셋을 포함할 수 있는지 여부
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false, // 엔진 빌드에 포함될지 (True) 또는 프로젝트에 로컬로 사용될지 (False)
+	"Modules": [
+		{
+			"Name": "DigitalTwinCommPlugin", // 플러그인 C++ 모듈 이름
+			"Type": "Runtime", // 런타임 모듈 (에디터에서도 사용 가능)
+			"LoadingPhase": "Default" // 로드 시점
+		}
+	]
+}
