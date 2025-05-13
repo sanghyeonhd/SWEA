@@ -7,7 +7,7 @@ import logging
 import threading # For managing module threads or background tasks
 import signal # For handling system shutdown signals
 
-import config # Main configuration for the entire system
+from src import config # Main configuration for the entire system
 # Import all core modules that this manager will control
 from robot_control_interface import RobotControlInterface
 from sensor_data_handler import SensorDataHandler # Placeholder - Needs actual implementation

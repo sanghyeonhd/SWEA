@@ -8,7 +8,7 @@ import datetime
 import logging
 import threading # For thread-safe database access
 
-import config # For DB_PATH or other DB connection settings
+from src import config # For DB_PATH or other DB connection settings
 
 # Setup basic logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

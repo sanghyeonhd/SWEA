@@ -1,5 +1,25 @@
 # robot_control_interface.py (Continued)
 
+import threading
+import time
+import json
+import socket
+import logging
+from src import config
+
+logger = logging.getLogger(__name__)
+
+class RobotControlInterface:
+    def __init__(self, config=None):
+        self.config = config
+        self.connections = {}
+        self.connected_robot_ids = []
+        # 실제 연결 초기화 등 필요한 코드 추가
+
+    def _get_connection(self, robot_id):
+        # 실제 연결 객체 반환 (더미)
+        return self.connections.get(robot_id)
+
     def set_welding_parameters(self, robot_id, current, voltage, speed):
         """
         Sends commands to set welding parameters (current, voltage, speed).

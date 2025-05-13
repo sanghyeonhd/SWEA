@@ -1,7 +1,7 @@
 # evaluator.py
 # Description: Evaluates the quality of the weld based on prediction results.
 
-import config
+from src import config
 
 # Define quality levels based on the image description
 QUALITY_CLASSES = {

@@ -5,7 +5,7 @@
 import json
 import socket
 import time
-import config
+from src import config
 
 class UnrealSimulatorInterface:
     """

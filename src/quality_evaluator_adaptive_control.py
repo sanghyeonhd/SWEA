@@ -2,7 +2,7 @@
 # Description: Evaluates weld quality based on AI prediction and sensors,
 #              and generates real-time adaptive control adjustments.
 
-import config
+from src import config
 # import numpy as np # Uncomment if direct numpy operations on sensor data are needed
 
 # Re-define quality levels from evaluator.py for clarity or import if preferred

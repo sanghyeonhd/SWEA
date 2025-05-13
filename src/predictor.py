@@ -5,7 +5,7 @@ import torch
 import numpy as np
 import os
 
-import config
+from src import config
 from ai_model import WeldingAIModel
 from physics_interface import UnrealSimulatorInterface # Assuming this class exists
 

@@ -7,7 +7,7 @@ import numpy as np
 import os
 import joblib # Recommended for saving/loading scikit-learn scalers
 
-import config
+from src import config
 from ai_model import WeldingAIModel
 # Assume sensor_data_handler provides data (this module will consume it)
 # Assume evaluator and data_logger_db will consume the output

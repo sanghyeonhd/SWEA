@@ -11,7 +11,7 @@ import queue # For potential internal buffering or passing data to consumers
 import random # For dummy data generation
 import datetime # For timestamps
 
-import config # Requires SENSOR_CONFIGS in config.py
+from src import config # Requires SENSOR_CONFIGS in config.py
 # from data_logger_db import DataLoggerDB # Use the singleton instance directly or pass it
 
 # Setup basic logging

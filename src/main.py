@@ -5,7 +5,7 @@ import time
 import numpy as np
 import pandas as pd # For reading potential input files
 
-import config # Import configuration settings
+from src import config # Import configuration settings
 from predictor import Predictor
 from evaluator import WeldEvaluator
 # from data_handler import load_data # Optional: for getting test data

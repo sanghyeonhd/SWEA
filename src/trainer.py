@@ -6,7 +6,7 @@ import torch.optim as optim
 import torch.nn as nn
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, mean_squared_error
 import os
-import config
+from src import config
 from ai_model import WeldingAIModel
 from data_handler import get_dataloaders
 

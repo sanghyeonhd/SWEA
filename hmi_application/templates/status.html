@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status - Welding DT AI HMI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Optional: Include JavaScript for auto-refresh -->
+    <script>
+        // Basic auto-refresh example (refreshes the whole page)
+        // For real-time updates, consider fetching data from /api/status using fetch/Ajax
+        // window.setTimeout(function(){ location.reload(); }, 5000); // Refresh every 5 seconds
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>System Status</h1>
+
+        <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+
+        <div class="status-section">
+            <h2>Overall Status</h2>
+            <p><strong>Manager Status:</strong> <span class="status-value">{{ status.manager_status | default('N/A') }}</span></p>
+            <p><strong>Timestamp:</strong> <span class="status-value">{{ status.timestamp | default('N/A') }}</span></p>
+            {% if 'note' in status %}
+                 <p class="warning"><strong>Note:</strong> {{ status.note }}</p>
+            {% endif %}
+             {% if 'error' in status %}
+                 <p class="error"><strong>Error:</strong> {{ status.error }}</p>
+            {% endif %}
+        </div>
+
+        <div class="status-section">
+            <h2>Process Manager Status</h2>
+            {% if status.process_manager_status %}
+                <p><strong>Current Job ID:</strong> <span class="status-value">{{ status.process_manager_status.current_job_id | default('N/A') }}</span></p>
+                <p><strong>Process State:</strong> <span class="status-value">{{ status.process_manager_status.process_state | default('N/A') }}</span></p>
+                {% if status.process_manager_status.active_robots %}
+                     <p><strong>Active Robots:</strong> {{ status.process_manager_status.active_robots | tojson }}</p> {# Render dict as JSON string #}
+                {% endif %}
+            {% else %}
+                <p>Process Manager status not available.</p>
+            {% endif %}
+        </div>
+
+         <div class="status-section">
+            <h2>Robot Interface Status</h2>
+            {% if status.robot_interface_status %}
+                <p><strong>Connected Robots:</strong> <span class="status-value">{{ status.robot_interface_status.connected_robots | default('N/A') | tojson }}</span></p>
+            {% else %}
+                <p>Robot Interface status not available.</p>
+            {% endif %}
+        </div>
+
+        <div class="status-section">
+            <h2>AI Engine Status</h2>
+            {% if status.ai_engine_status %}
+                <p><strong>Model Loaded:</strong> <span class="status-value">{{ status.ai_engine_status.model_loaded | default('N/A') }}</span></p>
+                <p><strong>Scaler Loaded:</strong> <span class="status-value">{{ status.ai_engine_status.scaler_loaded | default('N/A') }}</span></p>
+            {% else %}
+                <p>AI Engine status not available.</p>
+            {% endif %}
+        </div>
+
+        <div class="status-section">
+            <h2>Sensor Handler Status</h2>
+            <p><strong>Status:</strong> <span class="status-value">{{ status.sensor_handler_status | default('N/A') }}</span></p>
+            {% if status.get('sensor_handler_status') and status['sensor_handler_status'] != 'UNKNOWN' and 'data_queue_size' in status['sensor_handler_status'] %}
+                 <p><strong>Data Queue Size:</strong> <span class="status-value">{{ status.sensor_handler_status.data_queue_size | default('N/A') }}</span></p>
+                 {# Add other sensor handler details if returned by get_status #}
+            {% endif %}
+        </div>
+
+        {# Add sections for other modules like Data Logger DB status if available #}
+
+    </div>
+</body>
+</html>

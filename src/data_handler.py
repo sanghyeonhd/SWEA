@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-import config
+from src import config
 
 # --- Dummy Data Generation (for demonstration) ---
 def generate_dummy_data(num_samples=1000):
