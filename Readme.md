@@ -160,12 +160,7 @@ WeldingDigitalTwinAI/
 #     │   └── status.html
 #     └── static/
 #         └── style.css
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-Text
-IGNORE_WHEN_COPYING_END
+
 
 
 
@@ -212,12 +207,7 @@ ENARobot/  # 언리얼 엔진 프로젝트 루트 디렉토리
         │       ├── PythonCommServerComponent.h    # 통신 서버 컴포넌트 C++ 클래스 헤더 (Socket, Thread, JSON 파싱, Queue, Delegate 선언)
         │       └── PythonCommServerComponent.cpp  # 통신 서버 컴포넌트 C++ 클래스 소스 (TCP 서버 구동, 수신 스레드, 메시지 파싱, 큐 처리, 델리게이트 트리거, Python 응답 전송 구현)
         └── ... (기타 플러그인 내용)
-IGNORE_WHEN_COPYING_START
-content_copy
-download
-Use code with caution.
-Text
-IGNORE_WHEN_COPYING_END
+
 
 주요 Unreal Engine 파일 및 에셋 상세 설명:
 
