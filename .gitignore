@@ -28,4 +28,33 @@ prediction_log.csv
 
 # 기타
 *.swp
-*.bak 
+*.bak
+
+# Unreal Engine
+/.vscode/
+/.idea/
+/Build/
+/Binaries/
+/Intermediate/
+/Saved/
+/DerivedDataCache/
+/Plugins/[^A-Za-z0-9_-]*
+/Content/__MACOSX
+/Content/.AssetRegistry.bin
+/Content/DerivedDataCache
+/Engine/Build/BatchFiles/Linux/Build.sh
+/Engine/Config/BaseCompat.ini
+/Engine/Content/__MACOSX
+/Engine/DerivedDataCache
+/Engine/Plugins/[^A-Za-z0-9_-]*
+*.uprojectdirs
+*.build
+*.vcxproj
+*.sln
+*.xcworkspace
+*.xcodeproj
+*.appbundle
+*.dSYM
+*.mobileprovision
+*.p4config
+*.ini
