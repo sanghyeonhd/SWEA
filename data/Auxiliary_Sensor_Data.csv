@@ -1,0 +1,6 @@
+Timestamp,Sensor_ID,Robot_ID,Weld_Job_ID,Segment_ID,Data_Type,Value_1,Unit_1,Value_2,Unit_2,Value_3,Unit_3,Notes
+2025-05-17T14:30:00.010Z,PRESSURE-CYL-001,HH400-01,SPOOL-X100,SEAM-01,CylinderPressure,5.5,bar,,,,,,Clamping_Cylinder_Pressure
+2025-05-17T14:30:00.010Z,PRESSURE-GASLINE-001,HH400-01,SPOOL-X100,SEAM-01,GasLinePressure,4.0,bar,,,,,,Main_Gas_Line_Pressure
+2025-05-17T14:29:59.500Z,TOUCH-SENSOR-001,HH400-01,SPOOL-X100,SEAM-01,TouchDetection,TRUE,,1450.0,mm,180.5,mm,330.0,mm,ContactDetected,ContactX,ContactY,ContactZ
+2025-05-17T14:30:00.130Z,ACOUSTIC-ARC-001,HH400-01,SPOOL-X100,SEAM-01,AcousticArcAnalysis,85.2,dB,StableArcPatternID_or_Data,,,,,NoiseLevel_dB,ArcSoundPattern
+2025-05-17T14:30:01.500Z,ACOUSTIC-ARC-001,HH400-01,SPOOL-X100,SEAM-01,AcousticEvent,SpatterDetected,High,FrequencyDataPath_or_ID,,,,EventType,Severity,FrequencyDataRef

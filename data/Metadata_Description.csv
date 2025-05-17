@@ -1,0 +1,44 @@
+Field_Name,Sheet_Name,Description,Data_Type,Unit_Examples,Expected_Range_Notes
+Timestamp,Main_Sensor_Data / Auxiliary_Sensor_Data,Data recording time in UTC,ISO 8601 String (YYYY-MM-DDTHH:MM:SS.sssZ),N/A,N/A
+Sensor_ID,Main_Sensor_Data / Auxiliary_Sensor_Data,Unique identifier for the sensor,String,ARC-001; VISION-001,N/A
+Robot_ID,Main_Sensor_Data / Auxiliary_Sensor_Data,Unique identifier for the welding robot,String,HH400-01,N/A
+Weld_Job_ID,Main_Sensor_Data / Auxiliary_Sensor_Data,Identifier for the current welding job or pipe spool,String,SPOOL-X100,N/A
+Segment_ID,Main_Sensor_Data / Auxiliary_Sensor_Data,Identifier for a specific weld seam or segment within a job,String,SEAM-01,N/A
+Data_Type,Main_Sensor_Data / Auxiliary_Sensor_Data,Category of the sensor data,String,"ArcData; SeamTracking; TorchAngle",N/A
+Value_1,Main_Sensor_Data / Auxiliary_Sensor_Data,First data value from the sensor,Numeric/String,Depends on Unit_1,Depends on Sensor
+Unit_1,Main_Sensor_Data / Auxiliary_Sensor_Data,Unit for Value_1,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Value_2,Main_Sensor_Data / Auxiliary_Sensor_Data,Second data value from the sensor,Numeric/String,Depends on Unit_2,Depends on Sensor
+Unit_2,Main_Sensor_Data / Auxiliary_Sensor_Data,Unit for Value_2,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Value_3,Main_Sensor_Data / Auxiliary_Sensor_Data,Third data value from the sensor,Numeric/String,Depends on Unit_3,Depends on Sensor
+Unit_3,Main_Sensor_Data / Auxiliary_Sensor_Data,Unit for Value_3,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Value_4,Main_Sensor_Data,Fourth data value from the sensor,Numeric/String,Depends on Unit_4,Depends on Sensor
+Unit_4,Main_Sensor_Data,Unit for Value_4,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Value_5,Main_Sensor_Data,Fifth data value from the sensor,Numeric/String,Depends on Unit_5,Depends on Sensor
+Unit_5,Main_Sensor_Data,Unit for Value_5,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Value_6,Main_Sensor_Data,Sixth data value from the sensor,Numeric/String,Depends on Unit_6,Depends on Sensor
+Unit_6,Main_Sensor_Data,Unit for Value_6,String,"A; V; mm; deg; L/min; C; m/min; m/s^2; deg/s; bar; dB",N/A
+Notes,Main_Sensor_Data / Auxiliary_Sensor_Data,Additional notes or comma-separated names for Value_1 to Value_N,String,"Current,Voltage,ArcLength",N/A
+ArcData (Notes Example),Main_Sensor_Data,"Current (A), Voltage (V), ArcLength (mm)",String,N/A,N/A
+PathCorrection (Notes Example),Main_Sensor_Data,"CorrectionX (mm), CorrectionY (mm), CorrectionZ (mm)",String,N/A,N/A
+SeamTracking (Notes Example),Main_Sensor_Data,"SeamCenterX (px), SeamCenterY (px), GrooveDepth (mm), BeadWidth (mm), BeadHeight (mm), ImageDataRef (Path/ID)",String,N/A,N/A
+LaserProfile (Notes Example),Main_Sensor_Data,"GrooveWidth (mm), GrooveDepth (mm), Mismatch (mm)",String,N/A,N/A
+TorchAngle (Notes Example),Main_Sensor_Data,"Roll (deg), Pitch (deg), Yaw (deg)",String,N/A,N/A
+TorchAngularVelocity (Notes Example),Main_Sensor_Data,"AngVelX (deg/s), AngVelY (deg/s), AngVelZ (deg/s)",String,N/A,N/A
+TorchAcceleration (Notes Example),Main_Sensor_Data,"AccelX (m/s^2), AccelY (m/s^2), AccelZ (m/s^2)",String,N/A,N/A
+GasFlow (Notes Example),Main_Sensor_Data,"FlowRate (L/min), GasType (String, e.g., CO2, Ar, Mix)",String,N/A,N/A
+BaseMetalTemp (Value_1),Main_Sensor_Data,Temperature of the base metal,Numeric,C,0-500 C
+WeldZoneTemp (Value_1),Main_Sensor_Data,Temperature of the weld zone,Numeric,C,Up to 2000 C
+ThermalImage (Value_1),Main_Sensor_Data,Path or ID to the thermal image data,String,TempMapPath_or_ID_here,N/A
+WireFeed (Notes Example),Main_Sensor_Data,"FeedRate (m/min), WireDiameter (mm), TotalWireUsed (m)",String,N/A,N/A
+WeldElectrical (Notes Example),Main_Sensor_Data,"Current_Actual (A), Voltage_Actual (V), Power_Actual (kW), Resistance_Actual (ohm)",String,N/A,N/A
+TorchVibration (Notes Example),Main_Sensor_Data,"VibX (m/s^2), VibY (m/s^2), VibZ (m/s^2)",String,N/A,N/A
+JointVibration (Notes Example),Main_Sensor_Data,"JointN_Vib_Magnitude (m/s^2 or other unit)",String,N/A,N/A
+JointPosition (Value_1),Main_Sensor_Data,Angle of the specified robot joint,Numeric,deg,Varies by robot model
+RobotTCPPosition (Notes Example),Main_Sensor_Data,"TCP_X (mm), TCP_Y (mm), TCP_Z (mm), TCP_Roll (deg), TCP_Pitch (deg), TCP_Yaw (deg)",String,N/A,N/A
+AI_QualityCheck (Notes Example),Main_Sensor_Data,"DefectType (String), Status (String, e.g. Detected/Clear), Severity (String, e.g. Low/Medium/High), Location (String, e.g. X_Y_Z), Size (mm/px), ImageRef (Path/ID)",String,N/A,N/A
+AI_ThermalAnalysis (Notes Example),Main_Sensor_Data,"Parameter (e.g. CoolingRate), Value, Unit, ThermalState (String, e.g. Normal/Abnormal)",String,N/A,N/A
+CylinderPressure (Value_1),Auxiliary_Sensor_Data,Pressure in a pneumatic/hydraulic cylinder,Numeric,bar,0-10 bar
+GasLinePressure (Value_1),Auxiliary_Sensor_Data,Pressure in the main gas supply line,Numeric,bar,0-10 bar
+TouchDetection (Notes Example),Auxiliary_Sensor_Data,"ContactDetected (Boolean), ContactX (mm), ContactY (mm), ContactZ (mm)",String,N/A,N/A
+AcousticArcAnalysis (Notes Example),Auxiliary_Sensor_Data,"NoiseLevel (dB), ArcSoundPattern (String ID or features)",String,N/A,N/A
+AcousticEvent (Notes Example),Auxiliary_Sensor_Data,"EventType (String, e.g. SpatterDetected), Severity (String), FrequencyDataRef (Path/ID)",String,N/A,N/A
