@@ -1,112 +1,124 @@
+````markdown
 ## beamWeldFoam
 
-## Overview
-Presented here is the extensible open-source volume-of-fluid (VOF) solver beamWeldFoam, for studying high energy density advanced manufacturing processes. In this implementation the metallic substrate, and shielding gas phase, are treated as in-compressible. The solver fully captures the fusion/melting state transition of the metallic substrate. For the vapourisation of the substrate, the explicit volumetric dilation due to the vapourisation state transition is neglected, instead, a phenomenological recoil pressure term is used to capture the contribution to the momentum and energy fields due to vaporisation events. beamWeldFoam also captures surface tension effects, the temperature dependence of surface tension (Marangoni) effects, latent heat effects due to melting/fusion (and vapourisation), buoyancy effects due to the thermal expansion of the phases using a Boussinesq approximation, momentum damping due to solidification, and a representative heat source description of an incident laser/electron beam heat source. The heat source can also be modified to be representative of arc-welding processes.
-The solver approach is based on the adiabatic two-phase interFoam code developed by [OpenCFD Ltd.](http://openfoam.com/). Target applications for beamWeldFoam include:
+### 개요
+고에너지 밀도 첨단 제조 공정을 연구하기 위해 제시된 확장 가능한 오픈 소스 VOF(Volume-of-Fluid) 솔버 beamWeldFoam입니다. 이 구현에서 금속 기판과 보호 가스상은 비압축성으로 처리됩니다. 솔버는 금속 기판의 융합/용융 상태 전환을 완벽하게 포착합니다. 기판의 증발의 경우, 증발 상태 전환으로 인한 명시적인 부피 팽창은 무시되는 대신, 현상론적 반동 압력 항이 증발 현상으로 인한 운동량 및 에너지 장에 대한 기여를 포착하는 데 사용됩니다. beamWeldFoam은 또한 표면 장력 효과, 표면 장력의 온도 의존성 (마랑고니) 효과, 용융/융합 (및 증발)로 인한 잠열 효과, 부시네스크 근사를 사용하여 상의 열팽창으로 인한 부력 효과, 응고로 인한 운동량 감쇠, 그리고 입사하는 레이저/전자빔 열원의 대표적인 열원 설명을 포착합니다. 이 열원은 아크 용접 공정을 나타내도록 수정할 수도 있습니다.
 
-* Laser Welding
-* Electron Beam Welding
-* Arc Welding
-* Additive Manufacturing
+솔버 접근 방식은 [OpenCFD Ltd.](http://openfoam.com/)에서 개발한 단열 이상 유동 interFoam 코드를 기반으로 합니다. beamWeldFoam의 목표 적용 분야는 다음과 같습니다.
 
-## Installation
+* 레이저 용접
+* 전자빔 용접
+* 아크 용접
+* 적층 제조
 
-The current version of the code utilises the [OpenFoam6 libraries](https://openfoam.org/version/6/). The code has been developed and tested using an Ubuntu installation, but should work on any operating system capable of installing OpenFoam. To install the beamWeldFoam solver, first follow the instructions on this page: [OpenFoam 6 Install](https://openfoam.org/download/6-ubuntu/) to install the OpenFoam 6 libraries.
+### 설치
 
-To use with OpenFoam10 - please select the OF10 branch.
+현재 코드 버전은 [OpenFoam6 라이브러리](https://openfoam.org/version/6/)를 사용합니다. 이 코드는 Ubuntu 환경에서 개발 및 테스트되었지만 OpenFoam을 설치할 수 있는 모든 운영 체제에서 작동해야 합니다. beamWeldFoam 솔버를 설치하려면 먼저 이 페이지 ([OpenFoam 6 설치](https://openfoam.org/download/6-ubuntu/))의 지침에 따라 OpenFoam 6 라이브러리를 설치하십시오.
 
+OpenFoam10과 함께 사용하려면 OF10 브랜치를 선택하십시오.
 
+그런 다음 쉘 터미널에서 작업 폴더로 이동하여 git 코드 저장소를 복제하고 빌드합니다.
 
-Then navigate to a working folder in a shell terminal, clone the git code repository, and build.
-
-```
-$ git clone https://github.com/tomflint22/beamWeldFoam.git beamWeldFoam
+```bash
+$ git clone [https://github.com/tomflint22/beamWeldFoam.git](https://github.com/tomflint22/beamWeldFoam.git) beamWeldFoam
 $ cd beamWeldFoam/applications/solvers/beamWeldFoam/
 $ wclean
 $ wmake
-```
-The installation can be tested using the tutorial cases described below.
+````
 
-## Tutorial cases
-To run any of the tutorials in serial mode:
-```
-delete any old simulation files, e.g:
+아래 설명된 튜토리얼 케이스를 사용하여 설치를 테스트할 수 있습니다.
+
+### 튜토리얼 케이스
+
+직렬 모드에서 튜토리얼을 실행하려면 다음을 수행하십시오.
+
+```bash
+오래된 시뮬레이션 파일을 삭제하십시오 (예:):
 $ rm -r 0* 1* 2* 3* 4* 5* 6* 7* 8* 9*
-Then:
+그 다음:
 $ cp -r initial 0
 $ blockMesh
 $ setFields
 $ beamWeldFoam
 ```
-For parallel deployment, using MPI, following the setFields command:
-```
+
+`setFields` 명령 이후 MPI를 사용하여 병렬 배포를 하려면 다음을 수행하십시오.
+
+```bash
 $ decomposePar
 $ mpirun -np 6 beamWeldFoam -parallel >log &
 ```
-for deployment on 6 cores.
 
-### Gallium Melting Case
-A commonly used validation case for heat and mass transfer where melting and solidification is involved, is the simulation of Gallium melting in an enclosed container. In this example the beamWeldFoam solver is used to simulate the melting of the Gallium and the subsequent flow due to buoyancy. as time progresses the hot wall on the left-hand-side of the computational domain causes the Gallium in the local vicinity to melt. As the melt volume increases, buoyancy driven flow begings to dominate as the hot liquid Gallium rises and generates vortical flow structures in the liquid. The predicted melt profiles are in excellent agreement with those reported elsewhere, both numerically and experimentally [1].
+6개의 코어에 배포하는 경우입니다.
 
-### Marangoni Flow (Sen and Davies) Case
-Another useful validation case for the solver is one in which a 2D cavity is partially filled such that the interface between the phases is initially flat. A temperature gradient is then developed across the domain. This temperature gradient induces a flow tangential to the interface due to the dependence on temperature of the surface tension, aka Marangoni flow. An analytical steasy-state solution for the free surface deformation exists for this case [2]. excellent agreement between the beamWeldFoam solver and the analytical solution is observed.
+#### 갈륨 용융 케이스
 
-### Arc Welding Case
-In this example a surface heat flux is applied to an Aluminium substrate representative of an arc-welding process. In this scenario, a metallic substrate is present in the domain, between two regions of Argon gas. The heat source is applied at t=0s, and at t=0.25s the power begins to ramp down until at t=0.35s the heat source is fully extinguished.Shortly following the extinction of the heat source the domain fully solidifies. The effect of Marangoni driven flow can clearly be seen in this example, as the surface flows are driven from regions of higher temperature to regions of lower temperature (due to the decrease in surface tension with temperature). Furthermore, once the weld-pool has fully penetrated the domain, surface tension prevents the material from falling out of the bottom of the substrate.
+용융 및 응고가 관련된 열 및 물질 전달의 일반적인 검증 사례는 밀폐된 용기에서 갈륨 용융을 시뮬레이션하는 것입니다. 이 예에서는 beamWeldFoam 솔버를 사용하여 갈륨의 용융과 그에 따른 부력으로 인한 흐름을 시뮬레이션합니다. 시간이 지남에 따라 계산 영역의 왼쪽 뜨거운 벽은 국소적으로 갈륨을 용융시킵니다. 용융 부피가 증가함에 따라 뜨거운 액체 갈륨이 상승하여 액체 내에 와류 구조를 생성하므로 부력 구동 흐름이 지배적입니다. 예측된 용융 프로파일은 수치적 및 실험적으로 다른 곳에서 보고된 결과와 매우 잘 일치합니다\[1].
 
-### Beam Welding Case
-In this example beamWeldFoam is applied to simulate the power beam welding of a titanium alloy substrate. In this case, Ti6Al4V butt joints welded by a laser beam is simulated and the results are validated with the experimental study [3].
+#### 마랑고니 흐름 (Sen and Davies) 케이스
 
-## Algorithm
+솔버의 또 다른 유용한 검증 사례는 2D 공동이 부분적으로 채워져 상 사이의 계면이 처음에는 평평한 경우입니다. 그런 다음 도메인 전체에 온도 기울기가 발생합니다. 이 온도 기울기는 표면 장력의 온도 의존성(일명 마랑고니 흐름)으로 인해 계면에 접하는 흐름을 유도합니다. 이 경우 자유 표면 변형에 대한 분석적 정상 상태 해가 존재합니다\[2]. beamWeldFoam 솔버와 분석적 해 사이에는 매우 우수한 일치가 관찰됩니다.
 
-Initially the solver loads the mesh, reads in fields and boundary conditions, reads certain mesh information into arrays (for the heat source application), selects the turbulence model (if specified). The main solver loop is then initiated. First, the time step is
-dynamically modified to ensure numerical stability. Next, the two-phase fluid mixture properties and turbulence quantities are updated. The discretized phase-fraction equation is then solved for a user-defined number of subtime steps (typically 3) using the multidimensional universal limiter with explicit solution solver [MULES](https://openfoam.org/release/2-3-0/multiphase/). This solver is included in the OpenFOAM library, and performs conservative solution of hyperbolic convective transport equations with defined bounds (0 and 1 for α1). Once the updated phase field is obtained, the program enters the pressure–velocity loop, in which p and u are corrected in an alternating fashion. In this loop T is also solved for, such that he buoyancy predictions are correct for the U and p fields. The process of correcting the pressure and velocity fields in sequence is known as pressure implicit with splitting of operators (PISO). In the OpenFOAM environment, PISO is repeated for multiple iterations at each time step. This process is referred to as merged PISO- semi-implicit method for pressure-linked equations (SIMPLE), or the pressure-velocity loop (PIMPLE) process, where SIMPLE is an iterative pressure–velocity solution algorithm. PIMPLE continues for a user specified number of iterations. 
-The main solver loop iterates until program termination. A summary of the simulation algorithm is presented below:
-* beamWeldFoam Simulation Algorithm Summary:
-  * Initialize simulation data and mesh 
-  * WHILE t<t_end DO
-  * 1. Update delta_t for stability
-  * 2. Phase equation sub-cycle
-  * 3. Update interface location for heat source application
-  * 4. Update fluid properties
-  * 5. PISO Loop
-    * 1. Form u equation
-    * 2. Energy Transport Loop
-      * 1. Solve T equation
-      * 2. Update fluid fraction field
-      * 3. Re-evaluate source terms due to latent heat
-    * 3. PISO
-        * 1. Obtain and correct face fluxes
-        * 2. Solve p-Poisson equation
-        * 3. Correct u
-  * 6. Write Fields
-  
-Two sample tutorial cases, i.e. Gallium Meliing, and Sen and Davies cases are in strong agreement with experimental and analytical data available in the literature and serve as the validation cases for the implementation in beamWeldFoam.
+#### 아크 용접 케이스
 
-## License
-OpenFoam, and by extension the beamWeldFoam application, is licensed free and open source only under the [GNU General Public Licence version 3](https://www.gnu.org/licenses/gpl-3.0.en.html). One reason for OpenFOAM’s popularity is that its users are granted the freedom to modify and redistribute the software and have a right of continued free use, within the terms of the GPL.
+이 예에서는 아크 용접 공정을 대표하는 알루미늄 기판에 표면 열 플럭스가 적용됩니다. 이 시나리오에서는 아르곤 가스의 두 영역 사이에 금속 기판이 도메인에 존재합니다. 열원은 t=0s에 적용되고, t=0.25s에 전력이 감소하기 시작하여 t=0.35s에 열원이 완전히 꺼집니다. 열원이 꺼진 직후 도메인은 완전히 응고됩니다. 마랑고니 구동 흐름의 효과는 이 예에서 명확하게 볼 수 있습니다. 표면 흐름은 온도가 높은 영역에서 온도가 낮은 영역으로 구동됩니다 (온도에 따른 표면 장력 감소로 인해). 또한 용접 풀이 도메인을 완전히 관통한 후에는 표면 장력이 물질이 기판 아래쪽에서 떨어지는 것을 방지합니다.
 
-## Acknowledgements
-The work was generously supported by the Engineering and Physical Sciences Research Council (EPSRC) under the ''Cobalt-free Hard-facing for Reactor Systems'' grant EP/T016728/1, and Science Foundation Ireland (SFI), co-funded under European Regional Development Fund and by I-Form industry partners, grant 16/RC/3872.
+#### 빔 용접 케이스
 
-## Citing This Work
-If you use beamWeldFoam in your work. Please use the following to cite our work:
+이 예에서는 beamWeldFoam을 적용하여 티타늄 합금 기판의 파워 빔 용접을 시뮬레이션합니다. 이 경우 레이저 빔으로 용접된 Ti6Al4V 맞대기 이음매를 시뮬레이션하고 결과를 실험 연구\[3]와 비교하여 검증합니다.
+
+### 알고리즘
+
+솔버는 처음에 메쉬를 로드하고, 필드 및 경계 조건을 읽어들이고, 특정 메쉬 정보를 배열에 읽어들이고 (열원 적용을 위해), 난류 모델을 선택합니다 (지정된 경우). 그런 다음 주요 솔버 루프가 시작됩니다. 첫째, 수치적 안정성을 보장하기 위해 시간 간격이 동적으로 수정됩니다. 다음으로, 이상 유체 혼합물 속성 및 난류량이 업데이트됩니다. 이산화된 상 분율 방정식은 다차원 명시적 해법(MULES)을 사용하는 사용자 정의 하위 시간 단계 수(일반적으로 3)에 대해 풀립니다([MULES](https://openfoam.org/release/2-3-0/multiphase/)). 이 솔버는 OpenFOAM 라이브러리에 포함되어 있으며 정의된 경계(α1의 경우 0과 1)를 사용하여 쌍곡선 대류 수송 방정식의 보존적 해를 수행합니다. 업데이트된 상 필드를 얻으면 프로그램은 압력-속도 루프에 들어가고, 이 루프에서 p와 u가 교대로 수정됩니다. 이 루프에서 T도 풀려서 부력 예측이 U 및 p 필드에 대해 정확하도록 합니다. 압력 및 속도 필드를 순차적으로 수정하는 프로세스를 연산자 분할을 통한 압력 암시적 방법(PISO)이라고 합니다. OpenFOAM 환경에서 PISO는 각 시간 단계에서 여러 번 반복됩니다. 이 프로세스를 병합된 PISO - 압력-연결 방정식의 반-암시적 방법(SIMPLE) 또는 압력-속도 루프(PIMPLE) 프로세스라고 하며, 여기서 SIMPLE은 반복적인 압력-속도 해법 알고리즘입니다. PIMPLE은 사용자가 지정한 반복 횟수 동안 계속됩니다. 주요 솔버 루프는 프로그램이 종료될 때까지 반복됩니다. 시뮬레이션 알고리즘의 요약은 아래에 제시되어 있습니다.
+
+  * beamWeldFoam 시뮬레이션 알고리즘 요약:
+      * 시뮬레이션 데이터 및 메쉬 초기화
+      * t \< t\_end인 동안 다음을 반복합니다.
+        1.  안정성을 위해 delta\_t 업데이트
+        2.  상 방정식 하위 사이클
+        3.  열원 적용을 위한 인터페이스 위치 업데이트
+        4.  유체 속성 업데이트
+        5.  PISO 루프
+            1.  u 방정식 구성
+            2.  에너지 전달 루프
+                1.  T 방정식 풀기
+                2.  유체 분율 필드 업데이트
+                3.  잠열로 인한 소스 항 재평가
+            3.  PISO
+                1.  면 플럭스 얻고 수정
+                2.  p-Poisson 방정식 풀기
+                3.  u 수정
+        6.  필드 쓰기
+
+갈륨 용융 및 Sen and Davies 케이스의 두 가지 샘플 튜토리얼 케이스는 문헌에서 이용 가능한 실험 및 분석 데이터와 매우 잘 일치하며 beamWeldFoam 구현의 검증 사례 역할을 합니다.
+
+### 라이선스
+
+OpenFoam 및 확장적으로 beamWeldFoam 애플리케이션은 [GNU 일반 공중 사용 허가서 버전 3](https://www.gnu.org/licenses/gpl-3.0.en.html)에 따라서만 무료 및 오픈 소스로 라이선스가 부여됩니다. OpenFOAM의 인기 비결 중 하나는 사용자가 GPL 조건 내에서 소프트웨어를 자유롭게 수정하고 재배포할 수 있으며 지속적인 무료 사용 권한을 부여받는다는 것입니다.
+
+### 감사의 말씀
+
+이 연구는 유럽 지역 개발 기금 및 I-Form 산업 파트너의 공동 지원을 받는 Science Foundation Ireland (SFI) 보조금 16/RC/3872와 ''Cobalt-free Hard-facing for Reactor Systems'' 보조금 EP/T016728/1에 따라 영국 공학 및 물리 과학 연구회 (EPSRC)의 아낌없는 지원을 받았습니다.
+
+### 본 연구 인용 방법
+
+본 연구에서 beamWeldFoam을 사용하신 경우, 다음을 사용하여 본 연구를 인용해 주십시오.
 
 Thomas F. Flint, Gowthaman Parivendhan, Alojz Ivankovic, Michael C. Smith, Philip Cardiff,
-beamWeldFoam: Numerical simulation of high energy density fusion and vapourisation-inducing processes,
+beamWeldFoam: 고에너지 밀도 융합 및 증발 유도 공정의 수치 시뮬레이션,
 SoftwareX,
-Volume 18,
+18권,
 2022,
 101065,
 ISSN 2352-7110,
 https://doi.org/10.1016/j.softx.2022.101065
 
-## References
-* Kay Wittig and Petr A Nikrityuk 2012 IOP Conf. Ser.: Mater. Sci. Eng. 27 012054
-* Sen, A., & Davis, S. (1982). Steady thermocapillary flows in two-dimensional slots. Journal of Fluid Mechanics, 121, 163-186. doi:10.1017/S0022112082001840
-* Sabina L. Campanelli, Giuseppe Casalino, Michelangelo Mortello, Andrea Angelastro, Antonio Domenico Ludovico, Microstructural Characteristics and Mechanical Properties of Ti6Al4V Alloy Fiber Laser Welds
+### 참고 문헌
 
+1.  Kay Wittig and Petr A Nikrityuk 2012 IOP Conf. Ser.: Mater. Sci. Eng. 27 012054
+2.  Sen, A., & Davis, S. (1982). Steady thermocapillary flows in two-dimensional slots. Journal of Fluid Mechanics, 121, 163-186. doi:10.1017/S0022112082001840
+3.  Sabina L. Campanelli, Giuseppe Casalino, Michelangelo Mortello, Andrea Angelastro, Antonio Domenico Ludovico, Microstructural Characteristics and Mechanical Properties of Ti6Al4V Alloy Fiber Laser Welds
 
-![visitors](https://visitor-badge.deta.dev/badge?page_id=tomflint22.beamWeldFoam)
-
+```
+```
 
