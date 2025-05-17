@@ -1,60 +1,122 @@
 # Python
+# ======
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *.so
+
+# Distribution / packaging
 *.egg
 *.egg-info/
 dist/
-build/
+build/ # General build folder, could be for Python or other tools
 .eggs/
 
 # Virtual environments
+# ====================
+# These are typically at the project root
 .venv/
 venv/
 ENV/
 
 # Jupyter Notebook
+# ================
 .ipynb_checkpoints
 
-# VSCode
+# IDE & Editor specific
+# =====================
+# VSCode (global, affects all .vscode folders)
 .vscode/
 
+# Visual Studio (global, affects all .vs folders)
+.vs/
+
 # macOS
+# =====
 .DS_Store
 
-# Logs
+# Logs & Data files
+# =================
 *.log
 prediction_log.csv
+# 만약 data/ 폴더 내의 특정 파일이나 모든 파일을 무시하고 싶다면,
+# 예: data/*.csv 또는 data/
+# 필요에 따라 추가하세요.
 
-# 기타
+# 기타 (Other temporary files)
+# ============================
 *.swp
 *.bak
 
-# Unreal Engine
-/.vscode/
-/.idea/
-/Build/
-/Binaries/
-/Intermediate/
-/Saved/
-/DerivedDataCache/
-/Plugins/[^A-Za-z0-9_-]*
-/Content/__MACOSX
-/Content/.AssetRegistry.bin
-/Content/DerivedDataCache
-/Engine/Build/BatchFiles/Linux/Build.sh
-/Engine/Config/BaseCompat.ini
-/Engine/Content/__MACOSX
-/Engine/DerivedDataCache
-/Engine/Plugins/[^A-Za-z0-9_-]*
-*.uprojectdirs
-*.build
-*.vcxproj
-*.sln
-*.xcworkspace
-*.xcodeproj
-*.appbundle
-*.dSYM
-*.mobileprovision
-*.p4config
-*.ini
+# Unreal Engine (ENARobot 폴더 내)
+# ===================================
+# ENARobot 폴더가 프로젝트 루트의 하위 디렉토리이므로, 모든 경로는 ENARobot/ 로 시작합니다.
+
+# JetBrains Rider/CLion project files (ENARobot 폴더 내의 .idea 폴더)
+ENARobot/.idea/
+
+# Build artifacts
+ENARobot/Build/
+ENARobot/Binaries/
+ENARobot/Intermediate/
+ENARobot/Saved/ # Contains logs, config, screenshots, etc.
+ENARobot/DerivedDataCache/
+
+# Plugins: Ignore all plugins not checked into source control directly
+ENARobot/Plugins/[^A-Za-z0-9_-]*
+
+# macOS specific files within Content folder
+ENARobot/Content/__MACOSX
+ENARobot/Content/.AssetRegistry.bin # Cached asset information
+ENARobot/Content/DerivedDataCache
+
+# Engine specific (if you have a source build of the engine or engine modifications in your project)
+ENARobot/Engine/Build/BatchFiles/Linux/Build.sh
+ENARobot/Engine/Config/BaseCompat.ini
+ENARobot/Engine/Content/__MACOSX
+ENARobot/Engine/DerivedDataCache
+ENARobot/Engine/Plugins/[^A-Za-z0-9_-]*
+
+# Project files (often generated or user-specific, specific to ENARobot project)
+ENARobot/*.uprojectdirs
+ENARobot/*.build # This might be too general if other build systems use .build files outside ENARobot
+                 # If so, consider making it more specific like ENARobot/**/*.build
+
+# Visual Studio project files within ENARobot
+ENARobot/*.vcxproj
+ENARobot/*.sln
+
+# Xcode project files within ENARobot
+ENARobot/*.xcworkspace
+ENARobot/*.xcodeproj
+ENARobot/*.appbundle
+ENARobot/*.dSYM
+ENARobot/*.mobileprovision
+
+# Perforce specific (if used within ENARobot)
+ENARobot/*.p4config
+
+# Configuration files that might be user-specific or generated
+# 모든 .ini 파일을 무시하는 것은 주의해야 합니다.
+# ENARobot/Saved/ 디렉토리가 이미 무시 목록에 있으므로,
+# ENARobot/Saved/Config/ 내의 .ini 파일들은 이미 처리됩니다.
+# 만약 ENARobot/Config/ 중 특정 .ini (예: DefaultEditorPerProjectUserSettings.ini)를
+# 무시하고 싶다면 명시적으로 추가할 수 있습니다.
+ENARobot/**/*.ini # ENARobot 폴더 및 하위 폴더의 모든 .ini 파일을 무시합니다.
+                  # 주의: ENARobot/Config/Default*.ini 와 같이 중요한 설정 파일도 무시될 수 있습니다.
+                  # 필요한 경우 더 구체적으로 작성하세요. (예: ENARobot/Saved/**/*.ini)
+
+# Other top-level project files that are often generated or user-specific
+# (프로젝트 루트 레벨의 파일들)
+# 예시:
+# *.bak
+# *.tmp
+# Thumbs.db
+
+# 스크린샷에 보이는 파일 중 .gitattributes, MANIFEST.in.txt, Readme.md,
+# requirements.txt, setup.py 및 create_dummy_*.py 파일들은
+# 일반적으로 버전 관리에 포함되므로 여기서는 무시하지 않습니다.
+# 만약 data/ 폴더나 models/ 폴더 내의 특정 생성 파일들을 무시하고 싶다면,
+# 아래와 같이 추가할 수 있습니다:
+# data/*.csv
+# models/*.pth
