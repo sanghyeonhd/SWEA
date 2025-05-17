@@ -1,0 +1,70 @@
+// src/config_files/adaptive_rules.json
+{
+  "AI_Defect: Undercut": {
+    "description": "AI가 언더컷 결함을 예측했을 때의 대응 규칙",
+    "priority": 1,
+    "adjustments": {
+      "voltage": "-0.5",  // 전압 0.5V 감소
+      "speed": "+5%"      // 용접 속도 5% 증가 (예시: 언더컷이 과도한 입열로 인한 용융 풀 꺼짐 방지 목적)
+    },
+    "conditions": [ // (선택적) 이 규칙이 활성화될 추가 조건
+      {"parameter": "current", "operator": ">", "value": 150}
+    ]
+  },
+  "AI_Defect: Incomplete Fusion / Lack of Fusion": {
+    "description": "AI가 용입 부족 결함을 예측했을 때의 대응 규칙",
+    "priority": 1,
+    "adjustments": {
+      "current": "+10",   // 전류 10A 증가
+      "speed": "-8%"      // 용접 속도 8% 감소
+    }
+  },
+  "AI_Defect: Hot Tear / Crack": {
+    "description": "AI가 고온 균열을 예측했을 때의 대응 규칙 (복잡한 현상)",
+    "priority": 2,
+    "adjustments": {
+      "speed": "-15%",     // 용접 속도 15% 감소
+      "heat_input_target": "-5%" // 목표 입열량 5% 감소 (이 값은 WPM/QEA에서 전류/전압/속도로 변환 필요)
+    },
+    "message_to_operator": "고온 균열 가능성 높음. 모재 예열 상태 및 구속 조건 확인 요망."
+  },
+  "SENSOR_HighTemp": {
+    "description": "실시간 센서가 용접부 과열 감지 시",
+    "priority": 1,
+    "trigger_threshold": { "temperature": 480 }, // 이 값은 QualityEvaluator 코드 내 로직과 연동
+    "adjustments": {
+      "current": "-5",
+      "gas_flow": "+10%" // 보호 가스 유량 증가 (냉각 효과 기대)
+    }
+  },
+  "SENSOR_LowArcStability": {
+    "description": "실시간 아크 안정성 지수 낮을 시",
+    "priority": 1,
+    "trigger_threshold": { "arc_stability_index": 0.55 },
+    "adjustments": {
+      "voltage": "+0.2", // 미세 전압 조정
+      "ctwd": "-1"      // CTWD 1mm 감소 (아크 길이 안정화 시도)
+    },
+    "check_next_cycle": true // 다음 사이클에서 이 문제 개선 여부 집중 확인 플래그 (WPM에서 활용)
+  },
+  "AI_PoorScore": {
+    "description": "AI가 전반적인 용접 품질 점수를 낮게 예측했을 때 (회귀 모델)",
+    "priority": 3,
+    "trigger_threshold": { "predicted_score": 0.6 }, // QEA의 평가 로직과 연동
+    "adjustments": {
+      "speed": "-5%", // 일반적인 품질 저하 시 속도 우선 감소
+      "current": "+3"
+    }
+  },
+  "OPTIMIZE_GoodWeld": {
+    "description": "용접 품질이 지속적으로 좋을 때 생산성 향상을 위한 최적화 (선택적)",
+    "priority": 5,
+    "conditions": [
+      {"metric": "consecutive_good_welds", "operator": ">=", "value": 10}, // 10회 연속 양호
+      {"parameter": "current_speed_vs_max_recipe_speed_ratio", "operator": "<", "value": 0.9} // 현재 속도가 레시피 최대 속도 미만
+    ],
+    "adjustments": {
+      "speed": "+2%" // 속도 점진적 증가
+    }
+  }
+}

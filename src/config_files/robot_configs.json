@@ -1,0 +1,47 @@
+// src/config_files/robot_configs.json
+[
+  {
+    "id": 1,
+    "name": "WeldingRobot_A1",
+    "ip": "192.168.1.11",
+    "port": 50001,
+    "protocol_type": "hyundai_hi5a_virtual", // 실제 프로토콜 타입 명시
+    "description": "1번 용접 스테이션 담당 로봇",
+    "home_position_job": "P_HOME_R1", // 로봇 컨트롤러 내 원점 복귀 프로그램 이름
+    "max_speed_override": 100, // %
+    "default_tool_id": "Welder_Tool_A"
+  },
+  {
+    "id": 2,
+    "name": "WeldingRobot_A2",
+    "ip": "192.168.1.12",
+    "port": 50002,
+    "protocol_type": "hyundai_hi5a_virtual",
+    "description": "2번 용접 스테이션 담당 로봇 (협동 작업 가능)",
+    "home_position_job": "P_HOME_R2",
+    "max_speed_override": 100,
+    "default_tool_id": "Welder_Tool_B"
+  },
+  {
+    "id": 3,
+    "name": "HandlingRobot_B1",
+    "ip": "192.168.1.13",
+    "port": 50003,
+    "protocol_type": "hyundai_hi5a_virtual",
+    "description": "부품 핸들링 및 고정 로봇 (용접 로봇과 협동)",
+    "home_position_job": "P_HOME_R3",
+    "max_speed_override": 80,
+    "default_tool_id": "Gripper_Tool_X"
+  },
+  {
+    "id": 4,
+    "name": "InspectionRobot_C1",
+    "ip": "192.168.1.14",
+    "port": 50004,
+    "protocol_type": "hyundai_hi5a_virtual",
+    "description": "용접 후 검사 로봇 (비전/레이저 센서 탑재)",
+    "home_position_job": "P_HOME_R4",
+    "max_speed_override": 70,
+    "default_tool_id": "VisionSensor_Z"
+  }
+]

@@ -1,0 +1,22 @@
+# MANIFEST.in
+
+include README.md
+include requirements.txt
+# include LICENSE.txt # If you have a separate license file
+
+# Example: Include all .json files from a 'config_files' directory within the 'src' directory
+# This path is relative to the setup.py location if package_dir={'': 'src'}
+# For files inside the package defined by 'src', the path should reflect that.
+# If 'src' contains package 'my_package', and config_files is in 'my_package', then:
+# recursive-include src/my_package/config_files *.json
+# If config_files is directly under src, and src is treated as a meta-package source:
+recursive-include src/config_files *.json
+
+# Example: If you want to include example data files from data/ directory
+# when the package is installed (generally not recommended for large data,
+# better to download or have user provide).
+# recursive-include data *.csv
+
+# Example: If you want to package dummy models/scalers (for testing/demo only)
+# recursive-include models *.pth
+# recursive-include models *.pkl

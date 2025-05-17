@@ -1,0 +1,101 @@
+// src/config_files/welding_recipes.json
+{
+  "JOB_PART_A_SECTION_1": {
+    "description": "Part A의 Section 1 용접 (단일 로봇)",
+    "version": "1.0.1",
+    "material_type": "MildSteel_SS400_6T",
+    "target_quality_level": "Class A (ISO 5817 B)",
+    "robots_involved": [1],
+    "steps": [
+      {
+        "step_id": "S1_010",
+        "description": "로봇 1, 용접 시작점으로 이동",
+        "robot_id": 1,
+        "action": "move_to_start_pos",
+        "target_point_name": "P_START_A_S1", // 로봇 컨트롤러에 티칭된 포인트 이름
+        "target_pose_for_ue": { // UE 시각화용 목표 자세 (선택적, 없으면 UE는 로봇 상태 스트리밍에 의존)
+          "joint_angles": [10.0, -5.0, 90.0, 0.0, 5.0, -10.0],
+          "tcp_transform": {"position": [500.5, 100.2, 200.0], "rotation_quat_xyzw": [0.0, 0.0, 0.7071, 0.7071]}
+        },
+        "move_speed_percent": 80
+      },
+      {
+        "step_id": "S1_020",
+        "description": "로봇 1, 용접 파라미터 설정",
+        "robot_id": 1,
+        "action": "set_welding_params",
+        "parameters": {"current": 155.0, "voltage": 22.5, "speed": 280.0, "weaving_pattern": "triangle", "weaving_width": 3.0, "weaving_frequency": 2.0}
+      },
+      {
+        "step_id": "S1_030",
+        "description": "로봇 1, 아크 ON",
+        "robot_id": 1,
+        "action": "welder_on"
+      },
+      {
+        "step_id": "S1_040",
+        "description": "로봇 1, 용접 경로 프로그램 실행 (WELD_PATH_A_S1)",
+        "robot_id": 1,
+        "action": "run_job_program",
+        "job_name": "WELD_PATH_A_S1", // 로봇 컨트롤러 내 용접 경로 프로그램 이름
+        "adaptive_control_enabled": true // 이 스텝 동안 적응 제어 활성화
+      },
+      {
+        "step_id": "S1_050",
+        "description": "로봇 1, 아크 OFF",
+        "robot_id": 1,
+        "action": "welder_off"
+      },
+      {
+        "step_id": "S1_060",
+        "description": "로봇 1, 안전/홈 위치로 복귀",
+        "robot_id": 1,
+        "action": "move_to_home_pos",
+        "target_point_name": "P_HOME_R1",
+        "target_pose_for_ue": {
+          "joint_angles": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        },
+        "move_speed_percent": 100
+      }
+    ],
+    "quality_checkpoints": [ // 용접 중 품질 피드백/평가 시점
+      {"trigger_type": "time_elapsed_in_job", "job_name_ref": "WELD_PATH_A_S1", "value_sec": 5, "check_id": "S1_CP1"},
+      {"trigger_type": "time_elapsed_in_job", "job_name_ref": "WELD_PATH_A_S1", "value_sec": 15, "check_id": "S1_CP2"},
+      {"trigger_type": "robot_event", "job_name_ref": "WELD_PATH_A_S1", "event_code": 1001, "check_id": "S1_CP3"} // 로봇 컨트롤러 발생 이벤트
+    ]
+  },
+  "JOB_PART_B_DUAL_ROBOT": {
+    "description": "Part B 용접 (로봇 2, 3 협동 작업)",
+    "version": "1.1.0",
+    "material_type": "SUS304_4T",
+    "target_quality_level": "Class B (ISO 5817 B)",
+    "robots_involved": [2, 3],
+    "steps": [
+      // ... 로봇 2, 3의 이동 및 파라미터 설정 ...
+      {
+        "step_id": "B_GR010",
+        "description": "로봇 2, 3 용접 동시 시작 준비",
+        "group_action": "prepare_sync_start", // 그룹 액션 타입 예시
+        "robots": [2, 3],
+        "sync_tolerance_ms": 100 // 동기화 허용 오차
+      },
+      {
+        "step_id": "B_GR020",
+        "description": "로봇 2, 3 아크 ON (동기화)",
+        "group_action": "welder_on_all_sync",
+        "robots": [2, 3]
+      },
+      {
+        "step_id": "B_GR030",
+        "description": "로봇 2 (WELD_PATH_B_R2), 로봇 3 (WELD_PATH_B_R3) 동시 용접 실행",
+        "group_action": "run_job_program_sync",
+        "jobs": [
+          {"robot_id": 2, "job_name": "WELD_PATH_B_R2", "adaptive_control_enabled": true},
+          {"robot_id": 3, "job_name": "WELD_PATH_B_R3", "adaptive_control_enabled": true}
+        ]
+      }
+      // ... 아크 OFF 및 홈 복귀 ...
+    ]
+    // ... quality_checkpoints for JOB_PART_B_DUAL_ROBOT ...
+  }
+}
