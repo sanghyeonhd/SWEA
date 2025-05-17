@@ -100,6 +100,10 @@ graph TD
     linkStyle 26 stroke:#000,stroke-width:1.5px;
     linkStyle 27 stroke:#000,stroke-width:1.5px;
 
+
+
+
+
 3. 기술 스택
 
 Python: PyTorch, Flask, scikit-learn, pandas, numpy, threading, socket, json, joblib, logging 등.
@@ -109,6 +113,11 @@ Unreal Engine: C++, Blueprint Scripting, Networking (Sockets), JSON, 스켈레�
 통신 프로토콜: TCP/IP Socket (Custom JSON), 실제 장비 프로토콜 (향후).
 
 데이터베이스: SQLite (초기), PostgreSQL/InfluxDB/TimescaleDB (상용화 고려).
+
+
+
+
+
 
 4. 프로젝트 파일 구조
 
