@@ -157,6 +157,12 @@ download
 Use code with caution.
 Text
 IGNORE_WHEN_COPYING_END
+
+
+
+
+
+
 5. Unreal Engine 프로젝트 파일 구조 및 설명
 
 Unreal Engine 프로젝트 "ENARobot"은 Python 시스템과의 연동 및 시각화/시뮬레이션을 위한 C++ 코드와 블루프린트 에셋으로 구성됩니다.
@@ -278,6 +284,12 @@ Event Graph에서 C++ 부모 클래스의 BeginPlay를 호출합니다 (로봇 �
 
 오버라이드된 BIE 함수들(ApplyJointAngles, ApplyTCPTransform, SetArcVisibility, UpdateArcVisuals)의 상세 로직을 Blueprint로 구현합니다. 이 로직들이 Python에서 오는 데이터에 따라 3D 모델을 실제로 움직이고 시각 효과를 제어하는 핵심 부분입니다.
 
+
+
+
+
+
+
 6. 현재 기술개발 현황 요약
 
 현재까지 Unreal Engine 측 작업은 Python 시스템과의 네트워크 통신 및 로봇 시각화의 핵심 아키텍처 C++ 기반 뼈대 구축을 완료했습니다.
@@ -287,6 +299,11 @@ Event Graph에서 C++ 부모 클래스의 BeginPlay를 호출합니다 (로봇 �
 로봇 액터 기본 클래스 (ARobotBaseActor) C++ 구현 뼈대 완료: 로봇 ID 관리, 컴포넌트 참조, Python 명령(pose, visual command)을 받아들이는 인터페이스 정의, 상세 구현을 Blueprint로 위임하는 BIE 선언. BeginPlay 시 통신 컴포넌트에 자체 등록 로직 포함.
 
 프로젝트 설정 파일 (.uproject, .Build.cs, .ini): 필요한 UE 모듈 및 커스텀 플러그인 의존성 설정, 시작 맵 지정 등 기본 설정 완료.
+
+
+
+
+
 
 7. 향후 개발 계획 및 과제 (Work in Progress 상세)
 
